@@ -1,0 +1,29 @@
+worker instead of mvc
+dotnet new worker -n LoadTrackerExcelImport
+
+cd LoadTrackerExcelImport
+
+
+Add NuGet packages
+
+
+dotnet add package CsvHelper
+dotnet add package Cronos
+dotnet add package Serilog.Extensions.Hosting
+dotnet add package Serilog.Sinks.File
+dotnet add package Microsoft.Data.SqlClient
+
+
+mkdir Models
+mkdir Services
+
+
+project structure 
+
+LoadTrackerExcelImport/
+  Models/
+  Services/
+  Program.cs
+  Worker.cs   (we will NOT use this one)
+  appsettings.json
+  LoadTrackerExcelImport.csproj
