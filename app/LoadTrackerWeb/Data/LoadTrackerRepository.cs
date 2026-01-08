@@ -149,7 +149,8 @@ ORDER BY
             list.Add(new LoadRowViewModel
             {
                 DetailLineId = r.DetailLineId,
-                Probill = r.Probill,
+                // Probill = r.Probill,
+                Probill = FormatProbillForDisplay(r.Probill),
                 BolNo = r.BolNo,
                 OrderNo = r.OrderNo,
                 PoNo = r.PoNo,
@@ -234,6 +235,25 @@ WHERE [DETAIL_LINE_ID] = @DetailLineId
             ? start.Value.ToString("yyyy-MM-dd HH:mm")
             : end!.Value.ToString("yyyy-MM-dd HH:mm");
     }
+
+
+    private static string? FormatProbillForDisplay(string? raw)
+{
+    if (string.IsNullOrWhiteSpace(raw)) return raw;
+
+    raw = raw.Trim();
+
+    // Only remove prefix if it's C or T (case-insensitive)
+    if (raw.Length > 1 && (raw[0] == 'C' || raw[0] == 'c' || raw[0] == 'T' || raw[0] == 't'))
+        raw = raw.Substring(1);
+
+    // Remove leading zeros, keep the rest (ex: "00003255.1" -> "3255.1")
+    raw = raw.TrimStart('0');
+
+    // If it was all zeros (or "C0000"), show "0"
+    return raw.Length == 0 ? "0" : raw;
+}
+
 
     private static string ComputeOnTime(DateTime? actual, DateTime? windowStart, DateTime? windowEnd)
     {

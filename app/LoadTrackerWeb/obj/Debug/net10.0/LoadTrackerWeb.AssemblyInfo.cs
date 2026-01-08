@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LoadTrackerWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9448cd70da42e124319cdfd387793961cfb6b347")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3e4293d3ba0d8fb8b8df4e75c801253869be380")]
 [assembly: System.Reflection.AssemblyProductAttribute("LoadTrackerWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LoadTrackerWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
