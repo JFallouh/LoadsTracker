@@ -16,11 +16,9 @@ body.app-body{
   color: #1f2937;
   margin: 0;
 
-  /* allow full-page horizontal scroll for wide table */
   overflow-x: auto;
 }
 
-/* main grows, footer stays bottom */
 .app-main{
   flex: 1 0 auto;
   padding: 14px 12px 18px 12px;
@@ -51,7 +49,6 @@ body.app-body{
 
 .navbar-brand{ white-space: nowrap; }
 
-/* bigger circular logo */
 .app-logo{
   height: 68px;
   width: 68px;
@@ -98,7 +95,7 @@ body.app-body{
    Auth pages (Login / PickCustomer)
 ----------------------------- */
 .auth-page{
-  min-height: calc(100vh - 140px); /* header+footer approx */
+  min-height: calc(100vh - 140px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,7 +130,7 @@ body.app-body{
 }
 
 /* ----------------------------
-   Your existing Load Tracker styles
+   Load Tracker styles
 ----------------------------- */
 .error { color: #b00020; margin: 10px 0; }
 
@@ -149,7 +146,6 @@ body.app-body{
   background: #f9f9f9;
 }
 
-/* The sheet is wide -> body scrolls horizontally */
 table.sheet {
   border-collapse: collapse;
   table-layout: fixed;
@@ -218,14 +214,11 @@ textarea.delay, textarea.comments {
 
 table.sheet thead th { position: sticky; }
 
-.save-col { width: 60px; }
-button.save { padding: 2px 8px; }
-
 /* Offcanvas spacing */
 .offcanvas .form-label { font-weight: 700; }
 .offcanvas .hint { font-size: 12px; color: #64748b; }
 
-/* ---- Columns offcanvas: clean two-column layout + visible checkbox UI ---- */
+/* ---- Columns offcanvas: two-column layout ---- */
 .cols-grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -256,22 +249,57 @@ button.save { padding: 2px 8px; }
   line-height: 1.2;
 }
 
-/* Make checkbox border visible + professional */
 .col-check{
   width: 18px;
   height: 18px;
-  accent-color: #0f3b66; /* modern browsers */
+  accent-color: #0f3b66;
   flex: 0 0 auto;
-}
 
-/* Fallback: if browser ignores accent-color, force visible outline */
-.col-check{
   outline: 1px solid rgba(15, 23, 42, 0.35);
   outline-offset: -2px;
   border-radius: 4px;
 }
 
-/* On very small screens: single column */
 @media (max-width: 420px){
   .cols-grid{ grid-template-columns: 1fr; }
+}
+
+/* --- Row selection + editing cue --- */
+table.sheet tbody tr{ cursor: pointer; }
+table.sheet tbody tr.selected{ background: #eaf2ff; }
+table.sheet tbody tr.editing{ background: #fff2cc; }
+
+/* Exception: hide checkbox until edit mode */
+.edit-only{ display:none; }
+table.sheet tbody tr.editing .edit-only{ display:inline-block; }
+table.sheet tbody tr.editing .ex-text{ display:none; }
+
+/* Locked editors look like plain cell text */
+textarea.edit-lock[readonly]{
+  border: none;
+  background: transparent;
+  padding: 0;
+  resize: none;
+  outline: none;
+}
+
+/* When row is in edit mode, show normal textarea styling */
+table.sheet tbody tr.editing textarea{
+  border: 1px solid #999;
+  background: #fff;
+  padding: 2px 4px;
+  resize: both;
+}
+/* Navbar icon buttons: keep icons centered even without text */
+.app-icon-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+}
+
+.app-icon{
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }

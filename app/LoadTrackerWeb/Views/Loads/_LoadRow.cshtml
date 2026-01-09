@@ -2,10 +2,19 @@
 @model LoadTrackerWeb.Models.LoadRowViewModel
 @{
     bool canEdit = (ViewData["CanEdit"] as bool?) == true;
+
+    var probillRaw = (Model.Probill ?? "").Trim();
+    // Remove leading letter(s) and leading zeros (view-only)
+    var probillDisplay = System.Text.RegularExpressions.Regex.Replace(probillRaw, @"^[A-Za-z]+0*", "");
 }
 
-<tr data-rowid="@Model.DetailLineId">
-    <td data-col="probill">@Model.Probill</td>
+<tr data-rowid="@Model.DetailLineId"
+    data-orig-ex="@(Model.Exception ? "1" : "0")"
+    data-orig-userdelay="@(Model.UserNonCarrierDelay ?? "")"
+    data-effective-delay="@(Model.NonCarrierDelay ?? "")"
+    data-orig-comments="@(Model.Comments ?? "")">
+
+    <td data-col="probill">@probillDisplay</td>
     <td data-col="bol">@Model.BolNo</td>
     <td data-col="order">@Model.OrderNo</td>
     <td data-col="po">@Model.PoNo</td>
@@ -25,7 +34,8 @@
     <td data-col="exception">
         @if (canEdit)
         {
-            <input type="checkbox" class="ex" @(Model.Exception ? "checked" : "") />
+            <span class="ex-text">@(Model.Exception ? "YES" : "NO")</span>
+            <input type="checkbox" class="ex edit-only" @(Model.Exception ? "checked" : "") />
         }
         else
         {
@@ -38,7 +48,8 @@
     <td data-col="delay" class="wrap">
         @if (canEdit)
         {
-            <textarea class="delay" maxlength="255">@Model.UserNonCarrierDelay</textarea>
+            // Show EFFECTIVE delay (NonCarrierDelay) so user can correct without retyping.
+            <textarea class="delay edit-lock" maxlength="255" readonly>@(Model.NonCarrierDelay ?? "")</textarea>
         }
         else
         {
@@ -49,18 +60,11 @@
     <td data-col="comments" class="wrap">
         @if (canEdit)
         {
-            <textarea class="comments" maxlength="300">@Model.Comments</textarea>
+            <textarea class="comments edit-lock" maxlength="300" readonly>@(Model.Comments ?? "")</textarea>
         }
         else
         {
             @Model.Comments
         }
     </td>
-
-    @if (canEdit)
-    {
-        <td class="save-col">
-            <button type="button" class="save">Save</button>
-        </td>
-    }
 </tr>
